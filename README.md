@@ -116,6 +116,11 @@ Singing Voice Conversion via diffusion model
         ```
         python infer.py
         ```
+## Q&A
+- [기존에 학습했던 모델을 이어서 학습하는 방법](https://github.com/wlsdml1114/diff-svc/issues/5)
+- [메모리 부족 에러가 뜰 때, CUDA OUT OF MEMORY](https://github.com/wlsdml1114/diff-svc/issues/5)
+
+
 Original updates translated into english
 ## Updates
 >2022.12.4 44.1kHz vocoder added, officially providing support for 44.1kHz models!
