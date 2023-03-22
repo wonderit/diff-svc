@@ -90,7 +90,7 @@ def mp4_to_wav(input_dir:str, input_file: str):
         track.export(os.path.join(input_dir,os.path.splitext(input_file)[0]+".wav"), format='wav')
 
 
-def audio_norm(input_filepath: str, output_filepath: str):
+def audio_norm(input_filepath: str, output_filepath: str, use_preprocessing: bool):
     """오디오 파일에 노멀라이징 효과를 적용합니다.
 
     Args:
@@ -103,6 +103,11 @@ def audio_norm(input_filepath: str, output_filepath: str):
     assert ext in ["wav", "flac"], "지원하지 않는 포멧입니다."
 
     rawsound = AudioSegment.from_file(input_filepath, format=ext)
+
+    if use_preprocessing:
+        rawsound = rawsound.set_frame_rate(44100)
+        rawsound = rawsound.set_channels(1)
+        
     normalizedsound = effects.normalize(rawsound)
     normalizedsound.export(output_filepath, format="flac")
 
@@ -142,7 +147,7 @@ def get_audiofiles(path: str) -> List[str]:
     return filepaths
 
 
-def main(input_dir: str, output_dir: str, split_sil: bool = False, use_norm: bool = True, use_extract: bool = True) -> None:
+def main(input_dir: str, output_dir: str, split_sil: bool = False, use_preprocessing: bool=True, use_norm: bool = True, use_extract: bool = True) -> None:
     """메인 로직
 
     Args:
@@ -168,7 +173,7 @@ def main(input_dir: str, output_dir: str, split_sil: bool = False, use_norm: boo
         for filepath in tqdm(filepaths, desc="노멀라이징 작업 중..."):
             filename = os.path.splitext(os.path.basename(filepath))[0]
             out_filepath = os.path.join(output_norm_dir, filename) + ".wav"
-            audio_norm(filepath, out_filepath)
+            audio_norm(filepath, out_filepath, use_preprocessing)
 
         filepaths = get_audiofiles(output_norm_dir)
 
@@ -272,6 +277,7 @@ if __name__ == "__main__":
     input_dir = "preprocess"
     output_dir = "preprocess_out"
     split_sil = False
+    use_preprocessing = True # for set samplerate to 44100, channel to mono
     use_norm = True
     use_extract = True
 
@@ -279,6 +285,7 @@ if __name__ == "__main__":
         input_dir=input_dir,
         output_dir=output_dir,
         split_sil=split_sil,
+        use_preprocessing=use_preprocessing,
         use_norm=use_norm,
         use_extract=use_extract
     )
