@@ -104,10 +104,6 @@ def audio_norm(input_filepath: str, output_filepath: str, use_preprocessing: boo
 
     rawsound = AudioSegment.from_file(input_filepath, format=ext)
 
-    if use_preprocessing:
-        rawsound = rawsound.set_frame_rate(44100)
-        rawsound = rawsound.set_channels(1)
-        
     normalizedsound = effects.normalize(rawsound)
     normalizedsound.export(output_filepath, format="flac")
 
@@ -235,6 +231,11 @@ def main(input_dir: str, output_dir: str, split_sil: bool = False, use_preproces
             out_filepath = os.path.join(output_voice_dir, f"{filename}.wav")
 
             torchaudio.save(out_filepath, audios["vocals"].cpu(), sample_rate) # audios has drums, bass, vocals, others, but we need only vocals
+
+            if use_preprocessing:
+                rawsound = AudioSegment.from_file(out_filepath, format='wav')
+                rawsound = rawsound.set_channels(1)
+                rawsound.export(out_filepath, format="wav")
 
         filepaths = get_audiofiles(output_voice_dir)
 
