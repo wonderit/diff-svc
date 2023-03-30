@@ -28,14 +28,20 @@ Singing Voice Conversion via diffusion model
     sudo apt install git
     git clone https://github.com/wlsdml1114/diff-svc.git
     ```
-    
-5. Hubert checkpoint 다운로드 (Hubert ckpt 파일은 나에게 저작권이 없으니 나한테 달라고 하지마셈)
-    - 아래 디스코드채널에 들어가기
-    - verification step 통과
-    - 왼쪽 채널중에 ARCHIVE - pre-trained-model 채널에 들어가기
-    - 맨위에 451.48MB짜리 드라이브 링크가 있음 (mega.nz/~~로 시작)
-    - folder 다운로드 받기
-    - 위에서 압축해제한 폴더로 옮겨서 "여기에 압축해제" 해버리기
+
+5. checkpoint 다운로드
+    - GPU 메모리가 6GB미만인 경우
+        - Hubert checkpoint 다운로드 (Hubert ckpt 파일은 나에게 저작권이 없으니 나한테 달라고 하지마셈)
+            - 아래 디스코드채널에 들어가기
+            - verification step 통과
+            - 왼쪽 채널중에 ARCHIVE - pre-trained-model 채널에 들어가기
+            - 맨위에 451.48MB짜리 드라이브 링크가 있음 (mega.nz/~~로 시작)
+            - folder 다운로드 받기
+            - 위에서 압축해제한 폴더로 옮겨서 "여기에 압축해제" 해버리기
+    - GPU 메모리가 6GB이상인 경우
+        - Nsf Hifigan checkpoint 다운로드
+            - [여기](https://github.com/MLo7Ghinsan/MLo7_Diff-SVC_models/releases/download/diff-svc-necessary-checkpoints/nsf_hifigan.zip)에서 다운로드 받기
+            - 위에서 압축해제한 폴더로 옮겨서 "여기에 압축해제" 해버리기
 
 ## 학습환경 세팅
 1.  콘솔프로그램 실행
@@ -93,7 +99,7 @@ Singing Voice Conversion via diffusion model
     ```
 4. preprocess_out 폴더에 final폴더(use_extract=False)나 voice폴더(use_extract=True)에 wav파일들이 잔뜩 있을 것이다. 그것들을 복사해서 바로 아래 configure에서 설정할 raw_data_dir에 복붙해준다.
 5. 학습 configure를 설정
-    1. training폴더에 config.yaml파일을 메모장으로 열어준다.
+    1. training폴더에 config.yaml파일(혹은 config_nsf.yaml)을 메모장으로 열어준다.
     2. 바꿔야하는 항목들을 보기좋게 위에다가 올려놨다. 아래 내용에서 'test'가 들어간 부분을 님들 맘에 맞게 수정해주면 된다. 그리고 저장 (개발자거나 좀 더 좋은 퀄리티를 위해 커스텀할 사람은 아래 변수들을 추가로 바꿔주면 된다)
         ```
         ## original wav dataset folder
@@ -113,8 +119,13 @@ Singing Voice Conversion via diffusion model
         max_sentences: 10
         ```
 6. 실제 학습에 사용할 수 있게 binarize 해준다.
+    - GPU 메모리가 6GB미만인 경우
     ```
     python preprocessing/binarize.py --config training/config.yaml
+    ```
+    - GPU메모리가 6GB이상인 경우
+    ```
+    python preprocessing/binarize.py --config training/config_nsf.yaml
     ```
 ## 모델 학습 및 결과물 뽑기
 1. 학습코드 실행
@@ -122,11 +133,17 @@ Singing Voice Conversion via diffusion model
     - 그리고 이거 엄청 오래걸림 (내 경우 20시간은 넘게 걸린듯)
     - total loss가 학습을 계속해도 별로 안줄어드는거 같으면 그냥 ctrl+c해서 나와버리면 된다.
     
-    Windows의 경우
-    ```
-    python run.py --config training/config.yaml --exp_name test --reset 
-    ```
-    Linux의 경우:
+    - Windows의 경우
+        - GPU 메모리가 6GB미만인 경우
+        ```
+        python run.py --config training/config.yaml --exp_name test --reset
+        ```
+        
+        - GPU메모리가 6GB이상인 경우
+        ```
+        python run.py --config training/config_nsf.yaml --exp_name test --reset
+        ```
+    - Linux의 경우:
     ```
     CUDA_VISIBLE_DEVICES=0 python run.py --config training/config.yaml --exp_name test --reset
     ```
