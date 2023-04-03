@@ -59,7 +59,7 @@ Singing Voice Conversion via diffusion model
     ```
 4. library 설치 (이것도 설치 뭐 많이할거임 엔터엔터하면 댐)
     ```
-    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu116
+    pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu116
     pip install -r requirements.txt
     ```
 5. 환경 변수 세팅
