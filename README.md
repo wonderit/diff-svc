@@ -144,9 +144,15 @@ Singing Voice Conversion via diffusion model
         python run.py --config training/config_nsf.yaml --exp_name test --reset
         ```
     - Linux의 경우:
-    ```
-    CUDA_VISIBLE_DEVICES=0 python run.py --config training/config.yaml --exp_name test --reset
-    ```
+        - GPU 메모리가 6GB미만인 경우
+        ```
+        CUDA_VISIBLE_DEVICES=0 python run.py --config training/config.yaml --exp_name test --reset
+        ```
+        
+        - GPU메모리가 6GB이상인 경우
+        ```
+        CUDA_VISIBLE_DEVICES=0 python run.py --config training/config_nsf.yaml --exp_name test --reset
+        ```
     
     이어서 하고 싶을 경우
     
