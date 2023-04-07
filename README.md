@@ -117,7 +117,18 @@ Singing Voice Conversion via diffusion model
         ## batch size
         ## 모델이 한번에 학습할 양을 정한다 (CUDA out of memory에러가 나면 이 숫자를 줄이면 된다)
         max_sentences: 10
+        ## AMP(Automatic Mixed Precision) setting(only GPU) for less VRAM
+        ## AMP를 사용할것인지 설정, 학습시간에 차이는 없지만, 한번에 더 많은 batch를 학습시킬 수 있음.
+        use_amp: true
         ```
+        - AMP 효과
+
+            |amp switch|batch size|VRAM cost（GB)|time for 100 batchs|
+            |----------|----------|--------------|-------------------|
+            |on|32|7.9|02:17|
+            |off|32|OOM(Out Of Memory)|N/A|
+            |on|16|5.4|01:22|
+            |off|16|7.4|01:23|
 6. 실제 학습에 사용할 수 있게 binarize 해준다.
     - GPU 메모리가 6GB미만인 경우
     ```
