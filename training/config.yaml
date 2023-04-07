@@ -9,6 +9,8 @@ speaker_id: test
 work_dir: checkpoints/test
 ## batch size
 max_sentences: 10
+## AMP(Automatic Mixed Precision) setting(only GPU) for less VRAM
+use_amp: true
 
 # setting for developers and advanced users
 K_step: 1000
