@@ -176,6 +176,7 @@ Singing Voice Conversion via diffusion model
         # 81 line
         # 결과물을 뽑을 원본 파일, 즉 목소리가 변경되기를 원하는 파일
         # 이 파일 역시 배경음이 다 지워지고 목소리만 남아있는 상태여야함
+        # 44.1kHz, mono여야 퀄이 더 좋아짐
         # 한번에 여러개를 변경하고 싶으면 ["test1.wav", "test2.wav"] 이런식으로 늘리면댐
         file_names = ["test.wav"]
         ```
