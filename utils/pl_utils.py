@@ -1507,9 +1507,6 @@ class BaseTrainer:
                         model_ref = self.get_model()
                         if closure_loss.requires_grad:
                             if self.use_amp:
-                                print(closure_loss.device.type)
-                                print(closure_loss.type)
-                                print(closure_loss.is_cuda)
                                 self.scaler.scale(closure_loss).backward()
                             else:
                                 model_ref.backward(closure_loss, optimizer)
