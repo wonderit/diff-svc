@@ -15,21 +15,40 @@ Singing Voice Conversion via diffusion model
     - 설치 중간에 PATH환경변수에 추가하겠냐는 질문이 있는데, 이 단계에서 등록하는게 마음이 편함
 2. ffmpeg 설치 (https://www.gyan.dev/ffmpeg/builds/)
     - 압축해제한 폴더/bin 을 PATH환경변수에 추가해줘야 함
+    - Debian 혹은 Ubuntu Linux의 경우 다음 명령으로 설치
+    ```
+    sudo apt install ffmpeg
+    ```
 3. CUDA 11.6 설치 (https://developer.nvidia.com/cuda-11-6-2-download-archive?target_os=Windows&target_arch=x86_64&target_version=10&target_type=exe_local)
     - 재시작이 있을 수 있음
+    - 리눅스의 경우 nvidia드라이버가 설치되어 있다면 따로 설치할 필요없음. 
 4. 현재 repository를 .zip으로 다운로드
     - 압축해제 경로 전체에 한글이 없는게 좋음
     - 압축해제하면 diff-svc-main 폴더가 생김
-5. Hubert checkpoint 다운로드 (Hubert ckpt 파일은 나에게 저작권이 없으니 나한테 달라고 하지마셈)
-    - 아래 디스코드채널에 들어가기
-    - verification step 통과
-    - 왼쪽 채널중에 ARCHIVE - pre-trained-model 채널에 들어가기
-    - 맨위에 451.48MB짜리 드라이브 링크가 있음 (mega.nz/~~로 시작)
-    - folder 다운로드 받기
-    - 위에서 압축해제한 폴더로 옮겨서 "여기에 압축해제" 해버리기
+    - Linux라면 다음 명령어로 다운로드
+    ```
+    sudo apt install git
+    git clone https://github.com/wlsdml1114/diff-svc.git
+    ```
+
+5. checkpoint 다운로드
+    - GPU 메모리가 6GB미만인 경우
+        - Hubert checkpoint 다운로드 (Hubert ckpt 파일은 나에게 저작권이 없으니 나한테 달라고 하지마셈)
+            - 아래 디스코드채널에 들어가기
+            - verification step 통과
+            - 왼쪽 채널중에 ARCHIVE - pre-trained-model 채널에 들어가기
+            - 맨위에 451.48MB짜리 드라이브 링크가 있음 (mega.nz/~~로 시작)
+            - folder 다운로드 받기
+            - 위에서 압축해제한 폴더로 옮겨서 "여기에 압축해제" 해버리기
+    - GPU 메모리가 6GB이상인 경우
+        - Nsf Hifigan checkpoint 다운로드
+            - [여기](https://github.com/MLo7Ghinsan/MLo7_Diff-SVC_models/releases/download/diff-svc-necessary-checkpoints/nsf_hifigan.zip)에서 다운로드 받기
+            - 위에서 압축해제한 폴더로 옮겨서 "여기에 압축해제" 해버리기
 
 ## 학습환경 세팅
-1. anaconda prompt를 관리자 권한으로 열기
+1.  콘솔프로그램 실행
+       - Windows라면 anaconda prompt를 관리자 권한으로 열기
+       - 리눅스라면 터미널실행
 2. 프로젝트 폴더로 이동 (님이 어디에 압축풀었는지에 따라 다름)
     ```
     cd /path/to/project/diff-svc-main/
@@ -42,15 +61,24 @@ Singing Voice Conversion via diffusion model
     ```
 4. library 설치 (이것도 설치 뭐 많이할거임 엔터엔터하면 댐)
     ```
-    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu116
+    pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu116
     pip install -r requirements.txt
     ```
 5. 환경 변수 세팅
+
+    -Windows의 경우:
     ```
     # 라이브러리 불러올때 용이하게 하려고 추가
     set PYTHONPATH=.
     # 첫번째 GPU이용해서 학습하겠다는 마인드
+    #Windows의 경우에만
     set CUDA_VISIBLE_DEVICES=0
+    ```
+    -Linux의 경우:
+    ```
+    # 라이브러리 불러올때 용이하게 하려고 추가
+    export PYTHONPATH=.
+    # GPU사용은 학습시에 설정함.
     ```
 ## 학습용 데이터 준비
 ### 인공지능 학습에 있어서 데이터셋의 중요도는 80%이상, 데이터셋의 퀄리티가 곧 모델 결과의 퀄리티와 직결된다고 보면 됨
@@ -73,7 +101,7 @@ Singing Voice Conversion via diffusion model
     ```
 4. preprocess_out 폴더에 final폴더(use_extract=False)나 voice폴더(use_extract=True)에 wav파일들이 잔뜩 있을 것이다. 그것들을 복사해서 바로 아래 configure에서 설정할 raw_data_dir에 복붙해준다.
 5. 학습 configure를 설정
-    1. training폴더에 config.yaml파일을 메모장으로 열어준다.
+    1. training폴더에 config.yaml파일(혹은 config_nsf.yaml)을 메모장으로 열어준다.
     2. 바꿔야하는 항목들을 보기좋게 위에다가 올려놨다. 아래 내용에서 'test'가 들어간 부분을 님들 맘에 맞게 수정해주면 된다. 그리고 저장 (개발자거나 좀 더 좋은 퀄리티를 위해 커스텀할 사람은 아래 변수들을 추가로 바꿔주면 된다)
         ```
         ## original wav dataset folder
@@ -91,19 +119,66 @@ Singing Voice Conversion via diffusion model
         ## batch size
         ## 모델이 한번에 학습할 양을 정한다 (CUDA out of memory에러가 나면 이 숫자를 줄이면 된다)
         max_sentences: 10
+        ## AMP(Automatic Mixed Precision) setting(only GPU) for less VRAM
+        ## AMP를 사용할것인지 설정, 학습시간에 차이는 없지만, 한번에 더 많은 batch를 학습시킬 수 있음.
+        use_amp: true
         ```
+        - AMP 효과
+
+            |amp switch|batch size|VRAM cost（GB)|time for 100 batchs|
+            |----------|----------|--------------|-------------------|
+            |on|32|7.9|02:17|
+            |off|32|OOM(Out Of Memory)|N/A|
+            |on|16|5.4|01:22|
+            |off|16|7.4|01:23|
 6. 실제 학습에 사용할 수 있게 binarize 해준다.
+    - GPU 메모리가 6GB미만인 경우
     ```
     python preprocessing/binarize.py --config training/config.yaml
+    ```
+    - GPU메모리가 6GB이상인 경우
+    ```
+    python preprocessing/binarize.py --config training/config_nsf.yaml
     ```
 ## 모델 학습 및 결과물 뽑기
 1. 학습코드 실행
     - 마찬가지로 exp_name에 test들어가는 부분을 님들이 위에 설정한 이름으로 바꿔주면 된다.
     - 그리고 이거 엄청 오래걸림 (내 경우 20시간은 넘게 걸린듯)
-    - total loss가 학습을 계속해도 별로 안줄어드는거 같으면 그냥 ctrl+c해서 나와버리면 된다
+    - total loss가 학습을 계속해도 별로 안줄어드는거 같으면 그냥 ctrl+c해서 나와버리면 된다.
+    
+    - Windows의 경우
+        - GPU 메모리가 6GB미만인 경우
+        ```
+        python run.py --config training/config.yaml --exp_name test --reset
+        ```
+        
+        - GPU메모리가 6GB이상인 경우
+        ```
+        python run.py --config training/config_nsf.yaml --exp_name test --reset
+        ```
+    - Linux의 경우:
+        - GPU 메모리가 6GB미만인 경우
+        ```
+        CUDA_VISIBLE_DEVICES=0 python run.py --config training/config.yaml --exp_name test --reset
+        ```
+        
+        - GPU메모리가 6GB이상인 경우
+        ```
+        CUDA_VISIBLE_DEVICES=0 python run.py --config training/config_nsf.yaml --exp_name test --reset
+        ```
+    
+    이어서 하고 싶을 경우
+    
+    Windows의 경우
     ```
-    python run.py --config training/config.yaml --exp_name test --reset 
+    python run.py --exp_name test
     ```
+    Linux의 경우
+    ```
+    CUDA_VISIBLE_DEVICES=0 python run.py --exp_name test
+    ```
+    뒤에 --reset 과 --config 옵션을 지우고 명령을 내리면 알아서 최종 ckpt에 맞춰 이어서 학습을 한다. 만약 config.yaml 에러가 날경우 checkpoint/(이름) 폴더에 config.yaml파일을 복사하자.
+    
 2. 학습 끝나면 이제 결과물을 뽑을 차례
     1. infer.py를 메모장으로 열고 님이 위에 설정한 configure에 맞게 수정해야함
         ```
@@ -114,6 +189,7 @@ Singing Voice Conversion via diffusion model
         # 81 line
         # 결과물을 뽑을 원본 파일, 즉 목소리가 변경되기를 원하는 파일
         # 이 파일 역시 배경음이 다 지워지고 목소리만 남아있는 상태여야함
+        # 44.1kHz, mono여야 퀄이 더 좋아짐
         # 한번에 여러개를 변경하고 싶으면 ["test1.wav", "test2.wav"] 이런식으로 늘리면댐
         file_names = ["test.wav"]
         ```
@@ -125,6 +201,8 @@ Singing Voice Conversion via diffusion model
 ## Q&A
 - [기존에 학습했던 모델을 이어서 학습하는 방법](https://github.com/wlsdml1114/diff-svc/issues/5)
 - [메모리 부족 에러가 뜰 때, CUDA OUT OF MEMORY](https://github.com/wlsdml1114/diff-svc/issues/5)
+- [학습용 데이터의 양이 적은 경우, 학습 성능을 끌어 올리는 방법](https://github.com/wlsdml1114/diff-svc/issues/23)
+- [학습이 뭔가 느릴때, 확인해볼만한 내용](https://github.com/wlsdml1114/diff-svc/issues/25#issuecomment-1500502708)
 
 
 Original updates translated into english
