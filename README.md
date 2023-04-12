@@ -123,7 +123,7 @@ Singing Voice Conversion via diffusion model
         ## AMP를 사용할것인지 설정, 학습시간에 차이는 없지만, 한번에 더 많은 batch를 학습시킬 수 있음.
         use_amp: true
         ```
-        - AMP 효과
+        - AMP 효과 [AMP 관련 팁](https://github.com/wlsdml1114/diff-svc/issues/44)
 
             |amp switch|batch size|VRAM cost（GB)|time for 100 batchs|
             |----------|----------|--------------|-------------------|
