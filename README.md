@@ -1,6 +1,10 @@
 # Diff-SVC
 Singing Voice Conversion via diffusion model
 
+## DDSP-SVC-KOR
+DDSP 관련 레포지토리도 있습니다. diff-svc보다 DDSP가 더 성능이 좋다는 평가가 많아 이쪽으로 발전시켜볼 예정입니다.
+https://github.com/wlsdml1114/DDSP-SVC-KOR
+
 # Discord server (본 레포지토리 커뮤니티)
 [![Discord](https://img.shields.io/discord/1094270329729318913?color=%23738ADB&label=Discord&style=for-the-badge)](https://nguard.xyz/invite/diffsvckr)
 
