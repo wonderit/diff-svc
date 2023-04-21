@@ -2,9 +2,11 @@ import os
 
 os.environ["OMP_NUM_THREADS"] = "1"
 
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),'../'))
+
 import importlib
 from utils.hparams import set_hparams, hparams
-
 
 def binarize():
     binarizer_cls = hparams.get("binarizer_cls", 'basics.base_binarizer.BaseBinarizer')
