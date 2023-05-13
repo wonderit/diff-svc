@@ -207,6 +207,7 @@ https://github.com/wlsdml1114/DDSP-SVC-KOR
 - [메모리 부족 에러가 뜰 때, CUDA OUT OF MEMORY](https://github.com/wlsdml1114/diff-svc/issues/5)
 - [학습용 데이터의 양이 적은 경우, 학습 성능을 끌어 올리는 방법](https://github.com/wlsdml1114/diff-svc/issues/23)
 - [학습이 뭔가 느릴때, 확인해볼만한 내용](https://github.com/wlsdml1114/diff-svc/issues/25#issuecomment-1500502708)
+- [Binary 과정에서 IndexError가 발생했을 때 고려해볼만한 내용](https://github.com/wlsdml1114/diff-svc/issues/36)
 
 
 Original updates translated into english
