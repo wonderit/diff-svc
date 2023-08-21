@@ -36,15 +36,14 @@ https://github.com/wlsdml1114/DDSP-SVC-KOR
     ```
 
 5. checkpoint 다운로드
-    - GPU 메모리가 6GB미만인 경우
-        - Hubert checkpoint 다운로드 (Hubert ckpt 파일은 나에게 저작권이 없으니 나한테 달라고 하지마셈)
-            - 아래 디스코드채널에 들어가기
-            - verification step 통과
-            - 왼쪽 채널중에 ARCHIVE - pre-trained-model 채널에 들어가기
-            - 맨위에 451.48MB짜리 드라이브 링크가 있음 (mega.nz/~~로 시작)
-            - folder 다운로드 받기
-            - 위에서 압축해제한 폴더로 옮겨서 "여기에 압축해제" 해버리기
-    - GPU 메모리가 6GB이상인 경우
+    - Hubert checkpoint 다운로드 (Hubert ckpt 파일은 나에게 저작권이 없으니 나한테 달라고 하지마셈)
+        - 아래 디스코드채널에 들어가기
+        - verification step 통과
+        - 왼쪽 채널중에 ARCHIVE - pre-trained-model 채널에 들어가기
+        - 맨위에 451.48MB짜리 드라이브 링크가 있음 (mega.nz/~~로 시작)
+        - folder 다운로드 받기
+        - 위에서 압축해제한 폴더로 옮겨서 "여기에 압축해제" 해버리기
+    - (Optional) GPU 메모리가 6GB이상인 경우
         - Nsf Hifigan checkpoint 다운로드
             - [여기](https://github.com/MLo7Ghinsan/MLo7_Diff-SVC_models/releases/download/diff-svc-necessary-checkpoints/nsf_hifigan.zip)에서 다운로드 받기
             - 위에서 압축해제한 폴더로 옮겨서 "여기에 압축해제" 해버리기
