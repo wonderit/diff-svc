@@ -16,6 +16,7 @@ https://github.com/wlsdml1114/DDSP-SVC-KOR
 
 # bat파일을 이용해서 원클릭 학습 하는 방법 (2023.08.24 추가)
 ## checkpoint 다운로드 까지 완료한 상태에서 적용 가능한 방법
+## Thanks to 페 in arca.live
 [설명보고 오세요!](https://arca.live/b/aispeech/82629112)
 
 # local GPU에서 Diff-SVC 사용방법
