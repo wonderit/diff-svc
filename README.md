@@ -13,6 +13,11 @@ https://github.com/wlsdml1114/DDSP-SVC-KOR
 ## 2. **이 프로젝트는 학술 교류 목적으로 설립되었으며 프로덕션 환경을 위한 것이 아닙니다. 본 프로젝트의 모델에서 발생하는 음원으로 인해 발생하는 저작권 문제에 대해서는 책임을 지지 않습니다.**
 ## 튜토리얼 영상(아래 사용방법과 일치합니다)
 [![유튜브 영상](https://img.youtube.com/vi/8hJ1Wullg_g/0.jpg)](https://www.youtube.com/watch?v=8hJ1Wullg_g)
+
+# bat파일을 이용해서 원클릭 학습 하는 방법 (2023.08.24 추가)
+## checkpoint 다운로드 까지 완료한 상태에서 적용 가능한 방법
+[설명보고 오세요!](https://arca.live/b/aispeech/82629112)
+
 # local GPU에서 Diff-SVC 사용방법
 ## 코드 구동을 위한 프로그램 설치 및 코드, 체크포인트 다운로드
 1. 아나콘다3 설치 (https://www.anaconda.com/products/distribution)
