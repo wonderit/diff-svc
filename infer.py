@@ -73,12 +73,32 @@ def run_clip(svc_model, key, acc, use_pe, use_crepe, thre, use_gt_mel, add_noise
 
 if __name__ == '__main__':
     # Project folder name used for training
-    project_name = "test"
-    model_path = f'./checkpoints/{project_name}/model_ckpt_steps_246000.ckpt' # change ckpt file name to your best ckpt file name
+    project_name = "dex"
+    model_path = f'./checkpoints/{project_name}/model_ckpt_steps_28000.ckpt' # change ckpt file name to your best ckpt file name
     config_path = f'./checkpoints/{project_name}/config.yaml'
 
     # Support multiple wav/ogg files, put them in the raw folder, with extension
-    file_names = ["test.wav"]
+    file_names = [
+        "1-g1nger-hypeboy-newjeans.wav",
+        "01newjeans.wav",
+        "2-leeseunggi-emergency-izi.wav",
+        "02newjeans.wav",
+        "3-coldin-2soon-keshi.wav",
+        "4-g1nger-howru-crush.wav",
+        "5-bibi-happybirthday.wav",
+        "6-seventeen-happybirthday.wav"
+    ]
+    file_names = [
+        "3-bts-butter.wav",
+
+    ]
+    file_names = [
+        "lsg-delete_gaudiolab_vocal.mp3",
+        "someone-delete-nomr_gaudiolab_vocal.mp3",
+
+    ]
+    # file_names = ["newjeans-hypeboy-g1nger.wav"]
+    # file_names = ["01newjeans.wav", "02newjeans.wav"]
     trans = [0] # Pitch adjustment, 
                 # support positive and negative (semitones), 
                 # the number corresponds to the previous line, 
@@ -88,7 +108,7 @@ if __name__ == '__main__':
     # Acceleration factor
     accelerate = 20
     hubert_gpu = True
-    format='flac'
+    format='wav'
     step = int(model_path.split("_")[-1].split(".")[0])
 
     # don't move below

@@ -163,7 +163,7 @@ https://github.com/wlsdml1114/DDSP-SVC-KOR
         
         - GPU메모리가 6GB이상인 경우
         ```
-        python run.py --config training/config_nsf.yaml --exp_name test --reset
+        python run.py --config training/config_nsf.yaml --exp_name dex --reset
         ```
     - Linux의 경우:
         - GPU 메모리가 6GB미만인 경우
